@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Weave News Reader</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-theme.css" />
+    <link type="text/css" rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+    <div class="row container">
+        <div class="col-sm-3 side-bar">
+            <div class="row" style="height:inherit;">
+                <a href="" id="backLink" class="col-sm-2" style="height:inherit;"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                <header class="col-sm-10">
+                    <hgroup>
+                        <h1>weave</h1>
+                        <h2>NEWS READER</h2>
+                    </hgroup>
+                </header>
+                <nav class="col-sm-10">
+                    <ul>
+                        <li><a href="">all news</a></li>
+                        <li><a href="">latest news</a></li>
+                        <li><a href="">favorites</a></li>
+                        <li><a href="">previously read</a></li>
+                    </ul>
+                    <div>
+                        <!-- todo: template and observable collection -->
+                        <button type="button" class="btn" data-toggle="collapse" data-target="#demo">
+                            <span class="caret"></span> business
+                        </button>
+                        <div id="demo" class="collapse in">
+                            <nav class="category-nav">
+                                <ul>
+                                    <li><a href="">1</a></li>
+                                    <li><a href="">2</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!--end template-->
+                    </div>
+                    <div>
+                        <a href="">Add sources</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <article class="col-sm-8 content">
+            <header>Tests (more info F12 / Console)</header>
+            <div class="tst" id="getTest"></div>
+            <div class="tst" id="getUserInfo"></div>
+            <div class="tst" id="getUserNews"></div>
+        </article>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="js/knockout-3.0.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

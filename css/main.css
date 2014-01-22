@@ -1,0 +1,40 @@
+body, html, .container {
+  height: 100%;
+}
+
+body{
+    background-color: black;
+    color:white;
+}
+
+h1{
+    color:white;
+    font-size:x-large;
+    margin-bottom:4px;
+}
+
+h2{
+    color:darkgray;
+    font-size:x-small;
+    margin-top:4px;
+}
+
+
+/* navigation */
+nav a, nav button{
+    text-transform:uppercase;
+}
+
+.side-bar{
+    background-color:gray;
+    height:inherit;
+}
+
+#backLink{
+    margin: 30px 2px;
+    width:25px;;
+}
+
+.tst{
+    margin:20px 5px;
+}

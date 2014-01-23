@@ -1,34 +1,20 @@
-function log (obj) {
-    if (typeof console !== 'undefined') {
-        if (typeof obj === 'string')
-            console.log(obj);
-        else if(typeof console.dir !== 'undefined')
-            console.dir(obj);
-    }
-}
-
 /* dataservices */
 var ds = {
     api: '//weave-user.cloudapp.net/api',
     userId: '0d13bf82-0f14-475f-9725-f97e5a123d5a',
-    getUserInfo: function () {
-        $('#getUserInfo').html('getUserInfo');
+    getUserInfo: function (success) {
         this.get('/user/info',
             {
                 userId: ds.userId,
                 refresh: true
             },
-            function (data) {
-                $('#getUserInfo').html('getUserInfo success ' + JSON.stringify(data));
-                log(data);
-            },
+            success,
             function (err) {
-                $('#getUserInfo').html('getUserInfo error ' + JSON.stringify(err));
+                log('getUserInfo error' + err.statusText);
                 log(err);
             });
     },
     getUserNews: function (category, entry, skip, take, type, req) {
-        $('#getUserNews').html('getUserNews');
         this.get('/user/news',
             {
                 userId: ds.userId,
@@ -40,11 +26,12 @@ var ds = {
                 requireImage: req
             },
             function (data) {
-                $('#getUserNews').html('getUserNews success ' + JSON.stringify(data));
+                log('getUserNews');
+                //$('#getUserNews').html('getUserNews success ' + JSON.stringify(data));
                 log(data);
             },
             function (err) {
-                $('#getUserNews').html('getUserNews error ' + JSON.stringify(err));
+                log('getUserNews error' + err.statusText);
                 log(err);
             });
     },
@@ -63,7 +50,7 @@ var ds = {
             complete: function (jqXHR, textStatus) {
                 log(textStatus);
                 log(jqXHR.status);
-                log(jqXHR.responseText);
+                //log(jqXHR.responseText);
             }
         });
         
@@ -88,25 +75,68 @@ var ds = {
     }
 };
 
+function log(obj) {
+    if (typeof console !== 'undefined') {
+        if (typeof obj === 'string')
+            console.log(obj);
+        else if (typeof console.dir !== 'undefined')
+            console.dir(obj);
+    }
+}
+
+function getFeedCategories(userInfo) {
+    var feedCategories = [];
+    for (var i = 0, len = userInfo.Feeds.length; i < len; i++) {
+        var feed = userInfo.Feeds[i];
+        if (typeof feed.Category != 'undefined' && - 1 == feedCategories.indexOf(feed.Category))
+            feedCategories.push(feed.Category);
+    }
+    return feedCategories;
+}
+
+function getFeeds(userInfo, category) {
+    var sort = [];
+    for (var i = 0, len = userInfo.Feeds.length; i < len; i++) {
+        var feed = userInfo.Feeds[i];
+        if (category === feed.Category)
+            sort.push(feed.Name);
+    }
+    return sort;
+}
+
+/* knockoutjs */
+var navVM = {
+    categories: ko.observableArray()
+}
+
 $(function () {
-    
+
+    // init
+    ko.applyBindings(navVM);
+    ds.getUserInfo(function (userInfo) {
+        log('getUserInfo');
+        log('Feed Categories');
+        var categories = getFeedCategories(userInfo);
+        for (var c = 0, clen = categories.length; c < clen; c++) {
+            log(categories[c]);
+            var categoryVM = {
+                Name: categories[c],
+                Feeds: []
+            };
+            var feeds = getFeeds(userInfo, categories[c]);
+            for (var f = 0, flen = feeds.length; f < flen; f++) {
+                log('     ' + feeds[f]);
+                categoryVM.Feeds.push(feeds[f]);
+            }
+            navVM.categories.push(categoryVM);
+        }
+        log(userInfo);
+    });
+
+
     // tests
-    ds.getTest();
-    ds.getUserInfo();
-    ds.getUserNews('Gaming', 'Mark', 0, 20, 1, false);
+    //ds.getUserNews('Gaming', 'Mark', 0, 20, 1, false);
     //ds.getUserNews('Gaming', 'Peek', 20, 20, 1, false);
     //ds.getUserNews('Gaming', 'Peek', 40, 20, 1, false);
 
 });
-
-
-/* knockoutjs */
-function MainViewModel() {
-    
-}
-
-$(function () {
-    ko.applyBindings(new MainViewModel());
-});
-
-

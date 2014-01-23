@@ -9,50 +9,47 @@
     <link type="text/css" rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <div class="row container">
-        <div class="col-sm-3 side-bar">
-            <div class="row" style="height:inherit;">
-                <a href="" id="backLink" class="col-sm-2" style="height:inherit;"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+    <div id="frame" class="row">
+        <div class="col-md-3 col-lg-2" id="side-bar">
+            <div class="row">
+                <a href="" id="backLink" class="col-sm-2"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
                 <header class="col-sm-10">
                     <hgroup>
                         <h1>weave</h1>
                         <h2>NEWS READER</h2>
                     </hgroup>
                 </header>
-                <nav class="col-sm-10">
-                    <ul>
-                        <li><a href="">all news</a></li>
+                <nav id="nav" class="col-sm-12">
+                    <ul id="main-nav">
+                        <li><a href="" class="selected">all news</a></li>
                         <li><a href="">latest news</a></li>
                         <li><a href="">favorites</a></li>
                         <li><a href="">previously read</a></li>
                     </ul>
-                    <div>
-                        <!-- todo: template and observable collection -->
-                        <button type="button" class="btn" data-toggle="collapse" data-target="#demo">
-                            <span class="caret"></span> business
-                        </button>
-                        <div id="demo" class="collapse in">
-                            <nav class="category-nav">
-                                <ul>
-                                    <li><a href="">1</a></li>
-                                    <li><a href="">2</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!--end template-->
-                    </div>
-                    <div>
-                        <a href="">Add sources</a>
-                    </div>
+                    <div data-bind="template: { name: 'category-template', foreach: categories }"></div>
+                    <!-- knockout category/feed template -->
+                    <script type="text/html" id="category-template">
+                        <div data-bind="text: $data.Name"><span class="caret"></span></div>
+                        <nav class="category-nav">
+                            <ul>
+                                <!-- ko foreach: Feeds -->
+                                <li><a data-bind="text: $data"></a></li>
+                                <!-- /ko -->
+                            </ul>
+                        </nav>
+                    </script>
+                    <!--end template-->
+                    <a href="">Add sources</a>
                 </nav>
             </div>
         </div>
-        <article class="col-sm-8 content">
-            <header>Tests (more info F12 / Console)</header>
-            <div class="tst" id="getTest"></div>
-            <div class="tst" id="getUserInfo"></div>
-            <div class="tst" id="getUserNews"></div>
-        </article>
+        <div class="col-md-9 col-lg-10" id="content">
+            <div class=" row">
+                <div class="tst" id="getTest"></div>
+                <div class="tst" id="getUserInfo"></div>
+                <div class="tst" id="getUserNews"></div>
+            </div>
+        </div>
     </div>
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="js/knockout-3.0.0.min.js"></script>

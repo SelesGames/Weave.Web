@@ -1,10 +1,14 @@
-body, html, .container {
+body, 
+html,
+#frame,
+#content {
   height: 100%;
 }
 
 body{
-    background-color: black;
+    
     color:white;
+    background-color:rgb(19,19,19);
 }
 
 h1{
@@ -23,18 +27,39 @@ h2{
 /* navigation */
 nav a, nav button{
     text-transform:uppercase;
+    color:rgb(157,157,157);
 }
 
-.side-bar{
-    background-color:gray;
+#side-bar{
     height:inherit;
+    overflow-y:scroll;
 }
 
+#side-bar nav#nav{
+    
+}
+
+
+#side-bar #main-nav a.selected{
+    background-color:rgb(44,44,44);
+    border-left:4px solid rgb(233,99,82);
+}
+
+#side-bar #main-nav a, 
+#side-bar #main-nav li {
+    padding-left: 0;
+}
+
+/*  */
 #backLink{
     margin: 30px 2px;
-    width:25px;;
+    width:25px;
 }
 
 .tst{
     margin:20px 5px;
+}
+
+#content{
+    background-color: black;
 }

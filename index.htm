@@ -21,19 +21,20 @@
                 </header>
                 <nav id="nav" class="col-sm-12">
                     <ul id="main-nav">
-                        <li><a href="" class="selected">all news</a></li>
-                        <li><a href="">latest news</a></li>
+                        <li><a href="">all news</a></li>
+                        <li><a href="" class="selected">latest news</a></li>
                         <li><a href="">favorites</a></li>
                         <li><a href="">previously read</a></li>
                     </ul>
-                    <div data-bind="template: { name: 'category-template', foreach: categories }"></div>
+                    <img src="/images/loading.gif" id="loading-indicator" style="display:none" />
                     <!-- knockout category/feed template -->
+                    <div data-bind="template: { name: 'category-template', foreach: categories }"></div>
                     <script type="text/html" id="category-template">
-                        <div data-bind="text: $data.Name"><span class="caret"></span></div>
+                        <a data-bind="text: $data.Name, href: $data.Name, click: vm.getNewsForCategory.bind($data)"><span class="caret"></span></a>
                         <nav class="category-nav">
                             <ul>
                                 <!-- ko foreach: Feeds -->
-                                <li><a data-bind="text: $data"></a></li>
+                                <li><a data-bind="text: $data.Name, href: $data.Id, click: vm.getNewsForFeed.bind($data)"></a></li>
                                 <!-- /ko -->
                             </ul>
                         </nav>
@@ -44,7 +45,23 @@
             </div>
         </div>
         <div class="col-md-9 col-lg-10" id="content">
-            <div class=" row">
+            <!-- knockout news template -->
+            <div class="row" data-bind="template: { name: 'news-template', foreach: news }"></div>
+            <script type="text/html" id="news-template">
+                <!-- ko if: $data.HasImage -->
+                <a class="col-md-3 col-lg-4 box" data-bind="attr: { href: $data.Id}, style: { backgroundImage: 'url(\'' + $data.ImageUrl + '\')' }, click : vm.displayNewsInfo.bind($data)">
+                    <!--<img data-bind="style: { backgroundImage: 'url(\'' + $data.ImageUrl + '\')' }" />-->
+                    <span class="title" data-bind="text: $data.Title"></span>
+                </a>
+                <!-- /ko -->
+                <!-- ko ifnot: $data.HasImage -->
+                <a class="col-md-3 col-lg-4 box" data-bind="attr: { href: $data.Id}, click : vm.displayNewsInfo.bind($data)">
+                    <span class="title" data-bind="text: $data.Title"></span>
+                </a>
+                <!-- /ko -->
+            </script>
+            <!-- end template -->
+            <div class="row">
                 <div class="tst" id="getTest"></div>
                 <div class="tst" id="getUserInfo"></div>
                 <div class="tst" id="getUserNews"></div>

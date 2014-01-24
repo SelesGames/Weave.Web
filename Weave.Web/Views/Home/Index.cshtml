@@ -1,0 +1,118 @@
+﻿@{
+    Layout = null;
+    Response.Headers["X-UA-Compatible"] = "IE=10";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>My ASP.NET Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    @*@Scripts.Render("~/bundles/app")*@
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script type="text/javascript" src="/Scripts/main.js"></script>
+
+</head>
+<body>
+    @*<div data-bind="visible: loading">Loading...</div>
+    <div style="display: none" data-bind="visible: true" class="container body-content">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <p class="navbar-brand" data-bind="if: !loggedIn()">Application Name</p>
+                    <a href="#" class="navbar-brand" data-bind="if: loggedIn, click: navigateToHome">Application Name</a>
+                </div>
+                <div data-bind="if: loggedIn" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" data-bind="click: navigateToHome">Home</a></li>
+                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" data-bind="with: user">
+                        <li>
+                            <span class="navbar-text nofloat">Hello, <a href="#" class="navbar-link" data-bind="text: name, click: manage"></a>!</span>
+                        </li>
+                        <li><a href="#" data-bind="click: logOff">Log off</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+        <div class="row" id="frame">
+            <div class="col-sm-4 col-md-3" id="side-bar">
+                <div class="row">
+                    <a href="" id="backLink" class="col-sm-2"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+                    <header class="col-sm-10">
+                        <hgroup>
+                            <h1>weave</h1>
+                            <h2>NEWS READER</h2>
+                        </hgroup>
+                    </header>
+                    <nav id="nav" class="col-sm-12">
+                        <ul id="main-nav">
+                            <li><a href="">all news</a></li>
+                            <li><a href="" class="selected">latest news</a></li>
+                            <li><a href="">favorites</a></li>
+                            <li><a href="">previously read</a></li>
+                        </ul>
+                        <img src="/images/loading.gif" id="loading-indicator" style="display:none" />
+                        <!-- knockout category/feed template -->
+                        <div data-bind="template: { name: 'category-template', foreach: categories }"></div>
+                        <script type="text/html" id="category-template">
+                            <a data-bind="text: $data.Name, href: $data.Name, click: vm.getNewsForCategory.bind($data)"><span class="caret"></span></a>
+                            <nav class="category-nav">
+                                <ul>
+                                    <!-- ko foreach: Feeds -->
+                                    <li><a data-bind="text: $data.Name, href: $data.Id, click: vm.getUserNewsByFeedId.bind($data)"></a></li>
+                                    <!-- /ko -->
+                                </ul>
+                            </nav>
+                        </script>
+                        <!--end template-->
+                        <a href="">Add sources</a>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-sm-8 col-md-9" id="content">
+                <!-- knockout news template -->
+                <div class="row" data-bind="template: { name: 'news-template', foreach: news }"></div>
+                <script type="text/html" id="news-template">
+                    <!-- ko if: $data.HasImage -->
+                    <a class="col-md-3 box" data-bind="attr: { href: $data.Id}, style: { backgroundImage: 'url(\'' + $data.ImageUrl + '\')' }, click : vm.displayNewsInfo.bind($data)">
+                        <!--<img data-bind="style: { backgroundImage: 'url(\'' + $data.ImageUrl + '\')' }" />-->
+                        <span class="title" data-bind="text: $data.Title"></span>
+                    </a>
+                    <!-- /ko -->
+                    <!-- ko ifnot: $data.HasImage -->
+                    <a class="col-md-3 box" data-bind="attr: { href: $data.Id}, click : vm.displayNewsInfo.bind($data)">
+                        <span class="title" data-bind="text: $data.Title"></span>
+                    </a>
+                    <!-- /ko -->
+                </script>
+                <!-- end template -->
+                <div class="row">
+                    <div class="tst" id="getTest"></div>
+                    <div class="tst" id="getUserInfo"></div>
+                    <div class="tst" id="getUserNews"></div>
+                </div>
+            </div>
+        </div>
+        @*<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Weave News Reader</p>
+        </footer>
+    </div>*@
+
+   
+
+</body>
+</html>

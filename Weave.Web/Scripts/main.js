@@ -31,11 +31,11 @@ var ds = {
                 log(err);
             });
     },
-    getUserNewsByFeed: function (feedId, entry, skip, take, type, req, success) {
+    getUserNewsByFeedId: function (feedId, entry, skip, take, type, req, success) {
         this.get('/user/news',
             {
                 userId: ds.userId,
-                feedId: feedId,
+                Id: feedId,
                 entry: entry,
                 skip: skip,
                 take: take,
@@ -130,11 +130,6 @@ var vm = {
             vm.news.removeAll();
             for (var n = 0, nlen = data.News.length; n < nlen; n++) {
                 var news = data.News[n];
-                //log(news.Id);
-                //log(news.Title);
-                //log('     ImageUrl ' + news.ImageUrl);
-                //log(news);
-
                 var newsVM = {
                     Id: news.Id,
                     Title: news.Title,
@@ -145,12 +140,22 @@ var vm = {
             }
         });
     },
-    getNewsForFeed: function (feed) {
-        alert('get news for feed ' + feed.Name);
-        ds.getUserNews(feed.Name, 'Mark', 0, 10, 1, false,
+    getUserNewsByFeedId: function (feed) {
+        ds.getUserNewsByFeedId(feed.Id, 'Mark', 0, 10, 1, false,
         function (data) {
-            log('getUserNews for feed ' + feed.Name);
+            log('getNewsByFeed Id success' + feed.Id);
             log(data);
+            vm.news.removeAll();
+            for (var n = 0, nlen = data.News.length; n < nlen; n++) {
+                var news = data.News[n];
+                var newsVM = {
+                    Id: news.Id,
+                    Title: news.Title,
+                    ImageUrl: news.ImageUrl,
+                    HasImage: typeof news.ImageUrl != 'undefined'
+                };
+                vm.news.push(newsVM);
+            }
         });
     },
     displayNewsInfo: function(news){
@@ -184,6 +189,7 @@ $(function () {
             var feeds = getFeeds(userInfo, categories[c]);
             for (var f = 0, flen = feeds.length; f < flen; f++) {
                 //log('     ' + feeds[f]);
+                log(feeds[f]);
                 categoryVM.Feeds.push(feeds[f]);
             }
             vm.categories.push(categoryVM);
@@ -208,23 +214,14 @@ $(function () {
         log(userInfo);
     });
 
-    // todo
-    //log('Latest News' + new Date());
-    //for (var n = 0, nlen = userInfo.News.length; n < nlen; n++) {
-    //    var news = userInfo[n];
-    //    log(news.Title);
-    //    log('     ' + news.Link);
-    //    log('     ' + news.ImageUrl);
-    //}
-
 
     // tests
-    ds.getUserNews('Gaming', 'Mark', 0, 20, 1, false,
-        function (data) {
-            log('getUserNews');
-            //$('#getUserNews').html('getUserNews success ' + JSON.stringify(data));
-            log(data);
-        });
+    //ds.getUserNews('Gaming', 'Mark', 0, 20, 1, false,
+    //    function (data) {
+    //        log('getUserNews');
+    //        //$('#getUserNews').html('getUserNews success ' + JSON.stringify(data));
+    //        log(data);
+    //    });
     //ds.getUserNews('Gaming', 'Peek', 20, 20, 1, false);
     //ds.getUserNews('Gaming', 'Peek', 40, 20, 1, false);
 

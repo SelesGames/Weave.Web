@@ -1,3 +1,30 @@
+﻿/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors,
+.validationMessage {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
 body, 
 html,
 #frame,
@@ -63,6 +90,8 @@ nav a, nav button{
 /* main content area */
 #content{
     background-color: black;
+    height:inherit;
+    overflow-y:scroll;
 }
 
 #content a.box{

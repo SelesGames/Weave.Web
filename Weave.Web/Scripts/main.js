@@ -35,7 +35,7 @@ var ds = {
         this.get('/user/news',
             {
                 userId: ds.userId,
-                Id: feedId,
+                FeedId: feedId,
                 entry: entry,
                 skip: skip,
                 take: take,
@@ -141,6 +141,7 @@ var vm = {
         });
     },
     getUserNewsByFeedId: function (feed) {
+        
         ds.getUserNewsByFeedId(feed.Id, 'Mark', 0, 10, 1, false,
         function (data) {
             log('getNewsByFeed Id success' + feed.Id);

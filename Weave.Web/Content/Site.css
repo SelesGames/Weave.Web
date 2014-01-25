@@ -94,6 +94,7 @@ nav a, nav button{
     overflow-y:scroll;
 }
 
+/*  1.0 em : 250em x 250em, and get bigger on zoom */
 #content a.box{
     background-color: gray;
     
